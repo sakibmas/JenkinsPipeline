@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+       label params.AgentNode
+    }
+    stages {
+        stage('') {
+        }
+    }
+    post {
+            always {
+               emailext mimeType:'text/html',
+                    from: 'jenkins@setschedule.com',
+                    subject: "${JOB_NAME} ${currentBuild.currentResult}",
+                    to: "${recipientEmails}",
+                    attachLog: true,
+                    body: """${currentBuild.getBuildCauses()[0].shortDescription} / ${currentBuild.getBuildCauses()[0].userId} <br>
+                             Node Name: ${NODE_NAME} <br>
+                             Branch Name: ${BranchName} <br>
+                             Build Number: ${BUILD_NUMBER} <br>
+                             Workspace: ${WORKSPACE} <br>
+                             Artifacts: ${RUN_ARTIFACTS_DISPLAY_URL} <br>
+                             For details please browse ${BUILD_URL}console <br>"""
+            }
+    }
+}
