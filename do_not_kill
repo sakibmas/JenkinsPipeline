@@ -1,0 +1,15 @@
+pipeline {
+    agent {
+       label params.AgentNode
+    }
+    stages {
+        stage('Start') {
+          steps {
+            withEnv ( ['JENKINS_NODE_COOKIE=do_not_kill'] ) {
+              sh '''#!/bin/bash
+                    npm run start'''
+            }
+          }
+        }
+    }
+}
