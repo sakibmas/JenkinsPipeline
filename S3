@@ -3,7 +3,7 @@ pipeline {
         label params.Agent
     }
     stages {
-        stage('Upload') {
+        stage('List') {
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: params.AwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     powershell '''aws s3 ls'''
